@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef, useEffect } from "react";
+import { rcompareIdentifiers } from "semver";
 
 function App() {
+  const [count1, setCount1] = useState(0);
+  const [count2, setCount2] = useState(0);
+  const inputRef = useRef();
+  const reRenderCount = useRef(0);
+
+  const onButtonClick = () => {
+    console.log(inputRef);
+    inputRef.current.focus();
+  };
+
+  useEffect(() => {
+    reRenderCount.current = reRenderCount.current + 1;
+    console.log(`#Render: ${reRenderCount.current}`);
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>useRef</h1>
+      <button onClick={onButtonClick}>Focus the input</button>
+      <input ref={inputRef} type="text" />
+
+      <p>{"=".repeat(50)}</p>
+      <button onClick={() => setCount1((prevCount) => prevCount + 1)}>
+        {count1}
+      </button>
+      <button onClick={() => setCount2((prevCount) => prevCount + 1)}>
+        {count2}
+      </button>
+    </>
   );
 }
 
